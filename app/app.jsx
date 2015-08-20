@@ -5,7 +5,7 @@ export default class App extends React.Component {
     return (
       <div className='pure-g'>
         <header className='pure-u-1'>
-          <h1>Reports application</h1>
+          <h1>Reports Application</h1>
 
           <div className='description'>
             The most awesome reporting application ever
