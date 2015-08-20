@@ -35,7 +35,7 @@ if (TARGET === 'start') {
     devtool: 'eval-source-map',
     entry: [
       'webpack-dev-server/client?http://' + IP + ':' + PORT,
-      'webpack/hot/only-dev-server',
+      'webpack/hot/dev-server',
       APP_DIR
     ],
     output: {
