@@ -1,5 +1,3 @@
-/* TODO: insert main styles of your demo here */
-
 body {
     background: #fefefe;
 
@@ -22,7 +20,7 @@ header {
     color: #333;
     border: 0.1em solid #bbb;
 
-    background-image: url(./images/bgnoise_lg.png);
+    background: #ffda97;
 }
 
 header h1 {
