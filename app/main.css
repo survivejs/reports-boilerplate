@@ -13,18 +13,14 @@ header {
 
     text-align: center;
 
-    color: #333;
     border: 0.1em solid #bbb;
 
-    background: #ffda97;
+    background: #ff5b02;
+    color: white;
 }
 
 header h1 {
     margin: 0;
-}
-
-header .description {
-    color: #888;
 }
 
 article {
@@ -37,6 +33,14 @@ article {
     max-width: 768px;
 }
 
+table {
+    margin: 0 auto;
+}
+
 table thead tr {
     cursor: pointer;
+}
+
+table td {
+    background: #dcdcdc;
 }
