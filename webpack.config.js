@@ -1,15 +1,17 @@
-'use strict';
 var path = require('path');
-
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var Clean = require('clean-webpack-plugin');
 var merge = require('webpack-merge');
 
-var TARGET = process.env.npm_lifecycle_event;
-var APP_DIR = path.resolve(__dirname, 'app');
+const TARGET = process.env.npm_lifecycle_event;
+const PATHS = {
+  app: path.join(__dirname, 'app'),
+  build: path.join(__dirname, 'build')
+};
 
 var common = {
+  entry: PATHS.app,
   resolve: {
     extensions: [
       '', '.js', '.jsx', '.css'
@@ -22,64 +24,51 @@ var common = {
         loaders: ['style', 'css']
       }
     ]
-  }
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      title: 'Reports application'
+    })
+  ]
 };
 
-if (TARGET === 'start') {
-  var IP = 'localhost'; // '0.0.0.0'; for wlan (not on win!)
-  var PORT = 3000;
-
+if(TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
-    ip: IP,
-    port: PORT,
     devtool: 'eval-source-map',
-    entry: [
-      'webpack-dev-server/client?http://' + IP + ':' + PORT,
-      'webpack/hot/dev-server',
-      APP_DIR
-    ],
-    output: {
-      path: __dirname,
-      filename: 'bundle.js'
-    },
     plugins: [
       new webpack.DefinePlugin({
-        'process.env': {
-          'NODE_ENV': JSON.stringify('development'),
-        }
+        'process.env.NODE_ENV': JSON.stringify('development')
       }),
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin(),
-      new HtmlWebpackPlugin()
+      new webpack.NoErrorsPlugin()
     ],
     module: {
       loaders: [
         {
           test: /\.jsx?$/,
-          loaders: ['react-hot', 'babel'],
-          include: [APP_DIR]
+          loaders: ['babel'],
+          include: [PATHS.app]
         }
       ]
     }
   });
 }
-else {
+
+if(TARGET === 'build') {
   module.exports = merge(common, {
     entry: {
-      app: APP_DIR,
+      app: PATHS.app,
       vendors: ['react']
     },
     output: {
-      path: './gh-pages',
+      path: PATHS.build,
       filename: 'bundle.[chunkhash].js',
     },
     plugins: [
-      new Clean(['gh-pages']),
+      new Clean([PATHS.build]),
       new webpack.DefinePlugin({
-        'process.env': {
-          // This has effect on the react lib size
-          'NODE_ENV': JSON.stringify('production'),
-        }
+        // This has effect on the react lib size
+        'process.env.NODE_ENV': JSON.stringify('production')
       }),
       new webpack.optimize.DedupePlugin(),
       new webpack.optimize.UglifyJsPlugin({
@@ -87,17 +76,17 @@ else {
           warnings: false
         }
       }),
-      new webpack.optimize.CommonsChunkPlugin('vendors', 'vendors.[chunkhash].js'),
-      new HtmlWebpackPlugin({
-        title: 'Reports application'
-      })
+      new webpack.optimize.CommonsChunkPlugin(
+        'vendors',
+        '[name].[chunkhash].js'
+      )
     ],
     module: {
       loaders: [
         {
           test: /\.jsx?$/,
           loaders: ['babel'],
-          include: [APP_DIR],
+          include: [PATHS.app],
         }
       ]
     }
