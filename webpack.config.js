@@ -20,9 +20,7 @@ process.env.BABEL_ENV = TARGET;
 var common = {
   entry: PATHS.app,
   resolve: {
-    extensions: [
-      '', '.js', '.jsx', '.css'
-    ],
+    extensions: ['', '.js', '.jsx', '.css'],
   },
   module: {
     loaders: [
@@ -43,20 +41,6 @@ var common = {
 if(TARGET === 'start' || !TARGET) {
   module.exports = merge(common, {
     devtool: 'eval-source-map',
-    devServer: {
-      historyApiFallback: true,
-      hot: true,
-      inline: true,
-      progress: true,
-
-      // display only errors to reduce the amount of output
-      stats: 'errors-only',
-
-      // parse host and port from env so this is easy
-      // to customize
-      host: process.env.HOST,
-      port: process.env.PORT
-    },
     module: {
       loaders: [
         {
@@ -71,7 +55,16 @@ if(TARGET === 'start' || !TARGET) {
         'process.env.NODE_ENV': JSON.stringify('development')
       }),
       new webpack.HotModuleReplacementPlugin()
-    ]
+    ],
+    devServer: {
+      historyApiFallback: true,
+      hot: true,
+      inline: true,
+      progress: true,
+      host: process.env.HOST,
+      port: process.env.PORT,
+      stats: 'errors-only'
+    },
   });
 }
 
