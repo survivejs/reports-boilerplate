@@ -82,6 +82,7 @@ if(TARGET === 'build') {
     output: {
       path: PATHS.build,
       filename: '[name].[chunkhash].js',
+      chunkFilename: '[chunkhash].js'
     },
     module: {
       loaders: [
@@ -105,10 +106,10 @@ if(TARGET === 'build') {
           warnings: false
         }
       }),
-      new webpack.optimize.CommonsChunkPlugin(
-        'vendors',
-        '[name].[chunkhash].js'
-      )
+      new webpack.optimize.CommonsChunkPlugin({
+        names: ['vendors', 'manifest']
+      }),
+      new webpack.NamedModulesPlugin()
     ]
   });
 }
