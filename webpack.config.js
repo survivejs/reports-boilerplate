@@ -108,8 +108,7 @@ if(TARGET === 'build') {
       }),
       new webpack.optimize.CommonsChunkPlugin({
         names: ['vendors', 'manifest']
-      }),
-      new webpack.NamedModulesPlugin()
+      })
     ]
   });
 }
