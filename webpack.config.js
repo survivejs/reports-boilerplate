@@ -81,7 +81,7 @@ if(TARGET === 'build') {
     },
     output: {
       path: PATHS.build,
-      filename: 'bundle.[chunkhash].js',
+      filename: '[name].[chunkhash].js',
     },
     module: {
       loaders: [
