@@ -3,7 +3,7 @@ import './main.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app.jsx';
+import App from './App.jsx';
 
 main();
 
