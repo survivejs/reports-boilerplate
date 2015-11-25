@@ -22,6 +22,11 @@ var common = {
       {
         test: /\.css$/,
         loaders: ['style', 'css']
+      },
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel'],
+        include: [PATHS.app]
       }
     ]
   },
@@ -42,15 +47,6 @@ if(TARGET === 'start' || !TARGET) {
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin()
     ],
-    module: {
-      loaders: [
-        {
-          test: /\.jsx?$/,
-          loaders: ['babel'],
-          include: [PATHS.app]
-        }
-      ]
-    },
     devServer: {
       historyApiFallback: true,
       hot: true,
@@ -94,15 +90,6 @@ if(TARGET === 'build') {
         'vendors',
         '[name].[chunkhash].js'
       )
-    ],
-    module: {
-      loaders: [
-        {
-          test: /\.jsx?$/,
-          loaders: ['babel'],
-          include: [PATHS.app],
-        }
-      ]
-    }
+    ]
   });
 }
