@@ -1,9 +1,9 @@
-var path = require('path');
-var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var Clean = require('clean-webpack-plugin');
-var merge = require('webpack-merge');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
+const merge = require('webpack-merge');
 
 const TARGET = process.env.npm_lifecycle_event;
 const PATHS = {
@@ -89,7 +89,7 @@ if(TARGET === 'build') {
       ]
     },
     plugins: [
-      new Clean([PATHS.build]),
+      new CleanPlugin([PATHS.build]),
       new ExtractTextPlugin('styles.[chunkhash].css'),
       new webpack.DefinePlugin({
         // This has effect on the react lib size
